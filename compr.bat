@@ -1,0 +1,1 @@
+gcc src/*.c -static  -Llib -lglfw3 -lgdi32  -Iinclude  -O3 -s  -o bin/release/hi.exe

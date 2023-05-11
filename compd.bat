@@ -1,0 +1,1 @@
+gcc src/*.c -static  -Llib -lglfw3 -lgdi32  -Iinclude  -DDEBUG -o bin/debug/hi.exe
