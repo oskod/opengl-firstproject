@@ -1,5 +1,4 @@
 # Hello, OpenGL!
-----
 
 ## Libraries
 https://www.glfw.org/download.html -- Install the binaries for your OS, or build it from source.
