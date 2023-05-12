@@ -136,6 +136,8 @@ int main() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, TBO); // to opengl: hey, this is the buffer you need to write to when writing data to GL_ARRAY_BUFFER
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	// doesn't sizeof(vertices) give the size of the pointer and not the array??
+	// i'll have to research later
 
 
 	// render loop
