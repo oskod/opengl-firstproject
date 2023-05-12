@@ -10,17 +10,17 @@ void processInput(GLFWwindow* window);
 
 
 const char* vertexShaderSource = 
-"#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main() {\n"
-"	gl_Position = vec4(aPos.x, aPos.y, aPos.Z, 1.0f);\n"
-"}\0";
+	"#version 330 core\n"
+	"layout (location = 0) in vec3 aPos;\n"
+	"void main() {\n"
+	"	gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0f);\n"
+	"}";
 const char* fragmentShaderSource = 
-"#version 330 core\n"
-"out vec4 fragColor\n"
-"void main() {\n"
-"	fragColor = vec4(0.5f, 1.0f, 0.2f, 1.0f);\n"
-"}\0";
+	"#version 330 core\n"
+	"out vec4 fragColor;\n"
+	"void main() {\n"
+	"	fragColor = vec4(0.5f, 1.0f, 0.2f, 1.0f);\n"
+	"}";
 
 
 int main() {
@@ -63,6 +63,65 @@ int main() {
 	glViewport(0, 0, 800, 600);
 
 
+	// shaders
+	int success;
+	char infoLog[512];
+
+	unsigned int vertexShader;
+	unsigned int fragmentShader;
+	unsigned int shaderProgram;
+
+	// compile vertex shader
+	vertexShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
+	glCompileShader(vertexShader);
+
+	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
+		printf("OPENGL VERTEX SHADER COMPILATION FAILED\n%s", infoLog);
+
+		glfwTerminate();
+		return -1;
+	}
+
+	// compile fragment shader
+	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
+	glCompileShader(fragmentShader);
+
+	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
+		printf("OPENGL FRAGMENT SHADER COMPILATION FAILED\n%s", infoLog);
+
+		glfwTerminate();
+		return -1;
+	}
+
+	// create shader program and attach shaders
+	shaderProgram = glCreateProgram();
+
+	glAttachShader(shaderProgram, vertexShader);
+	glAttachShader(shaderProgram, fragmentShader);
+	glLinkProgram(shaderProgram);
+
+	glGetShaderiv(shaderProgram, GL_LINK_STATUS, &success);
+	if (!success) {
+		glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
+		printf("OPENGL SHADER PROGRAM LINKING FAILED\n%s", infoLog);
+		
+		glfwTerminate();
+		return -1;
+	}
+
+	glUseProgram(shaderProgram);
+	glDeleteShader(vertexShader);
+	glDeleteShader(fragmentShader);
+
+	//TODO continue from "Linking Vertex Attributes" - https://learnopengl.com/Getting-started/Hello-Triangle
+
+
 	// create first triangle
 	
 	float vertices[] = {
@@ -77,55 +136,6 @@ int main() {
 
 	glBindBuffer(GL_ARRAY_BUFFER, TBO); // to opengl: hey, this is the buffer you need to write to when writing data to GL_ARRAY_BUFFER
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-	
-
-	// shaders
-	int success;
-	char infoLog[512];
-
-	// compile vertex shader
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-	glCompileShader(vertexShader);
-
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		printf("OPENGL VERTEX SHADER COMPILATION FAILED\n%s", infoLog);
-	}
-
-	// compile fragment shader
-	unsigned int fragmentShader;
-	fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentShader);
-
-	glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-		printf("OPENGL FRAGMENT SHADER COMPILATION FAILED\n%s", infoLog);
-	}
-
-	// create shader program and attach shaders
-	unsigned int shaderProgram;
-	shaderProgram = glCreateProgram();
-
-	glAttachShader(shaderProgram, vertexShader);
-	glAttachShader(shaderProgram, fragmentShader);
-	glLinkProgram(shaderProgram);
-
-	glGetShaderiv(shaderProgram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetShaderInfoLog(shaderProgram, 512, NULL, infoLog);
-		printf("OPENGL SHADER PROGRAM LINKING FAILED\n%s", infoLog);
-	}
-
-	glUseProgram(shaderProgram);
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentShader);
-
-	//TODO continue from "Linking Vertex Attributes" - https://learnopengl.com/Getting-started/Hello-Triangle
 
 
 	// render loop
