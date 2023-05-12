@@ -2,6 +2,7 @@
 
 ## Libraries
 https://www.glfw.org/download.html -- Install the binaries for your OS, or build it from source.
+Make sure to get the static `libglfw3` binary.
 
 Put all the libraries into the `lib/` folder, if it's not there, run init.bat.
 
