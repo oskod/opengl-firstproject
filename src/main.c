@@ -1,5 +1,8 @@
 #ifdef DEBUG
 #include <stdio.h>
+#else
+// all printf gone if debug is undefined
+#define printf(...) (void)0
 #endif
 
 #include "GLAD/glad.h"
@@ -10,7 +13,6 @@ const int height = 600;
 
 void __framebufferSizeCallback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
-
 
 const char* vertexShaderSource = 
 	"#version 330 core\n"
@@ -25,11 +27,8 @@ const char* fragmentShaderSource =
 	"	fragColor = vec4(0.5f, 0.2f, 1.0f, 1.0f);\n"
 	"}";
 
-
 int main() {
-#ifdef DEBUG
 	printf("Hello, OpenGL!\n");
-#endif
 
 	// glfw initialize and config
 	glfwInit();
@@ -44,9 +43,7 @@ int main() {
 	// glfw window creation
 	GLFWwindow* window = glfwCreateWindow(width, height, "my first opengl project!!!!!!", NULL, NULL);
 	if (window == NULL) {
-		#ifdef DEBUG
 		printf("Failed to create window\n");
-		#endif
 
 		glfwTerminate();
 		return -1;
@@ -56,15 +53,12 @@ int main() {
 
 	// glad: load all OpenGL function pointers
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		#ifdef DEBUG
 		printf("Failed to initialize GLAD\n");
-		#endif
 
 		glfwTerminate();
 		return -1;
 	}
 	glViewport(0, 0, width, height);
-
 
 	// shaders
 	int success;
@@ -191,9 +185,7 @@ int main() {
 }
 
 void __framebufferSizeCallback(GLFWwindow* window, int width, int height) {
-	#ifdef DEBUG
 	printf("Resize %d %d\n", width, height);
-	#endif
 	glViewport(0, 0, width, height);
 }
 void processInput(GLFWwindow* window) {
