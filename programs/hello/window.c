@@ -3,6 +3,7 @@
 #else
 #define printf(...) (void)0
 #endif
+#include <math.h>
 
 #include "GLAD/glad.h"
 #include "GLFW/glfw3.h"
@@ -51,7 +52,11 @@ int main() {
 		// input
 		processInput(window);
 
-		glClearColor(0.3f, 0.2f, 0.2f, 1.0f);
+		double elapsed = glfwGetTime();
+		printf("time: %f\n", elapsed);
+		double sine = sin(elapsed * 2) * 0.5f + 0.5f; // remap from -1,1 to 0,1
+
+		glClearColor(sine, sine, sine, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		// render instructions are finished, swap buffers and render to the screen
