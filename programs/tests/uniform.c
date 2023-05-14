@@ -19,8 +19,9 @@ void processInput(GLFWwindow* window);
 const char* vertexShaderSource = 
 	"#version 330 core\n"
 	"layout (location = 0) in vec2 pos;\n"
+	"uniform vec4 offset;\n"
 	"void main() {\n"
-	"	gl_Position = vec4(pos.x, pos.y, 0.0f, 1.0f);\n"
+	"	gl_Position = offset + vec4(pos.x, pos.y, 0.0f, 1.0f);\n"
 	"}";
 const char* fragmentShaderSource = 
 	"#version 330 core\n"
@@ -142,20 +143,26 @@ int main() {
 	glBindVertexArray(0);
 
 	// render loop
+
+	// clear only at the start, so all frames stay and create a trail like effect
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
-
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
 
 		// activate shader
 		glUseProgram(shaderProgram);
 
 		// ourColor uniform
 		float elapsed = glfwGetTime();
-		float sine = sin(elapsed) * 0.5f + 0.5f;
-		int colorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-		glUniform4f(colorLocation, 1.0f - sine, 1.0f - sine, sine, 1.0f);
+
+		int offsetPointer = glGetUniformLocation(shaderProgram, "offset");
+		glUniform4f(offsetPointer, sin(elapsed) * 0.3f, sin(elapsed * 2) * 0.2f, 0.0f, 0.0f);
+
+		float sine = sin(elapsed * 3) * 0.5f + 0.5f;
+		int colorPointer = glGetUniformLocation(shaderProgram, "ourColor");
+		glUniform4f(colorPointer, 1.0f - sine, 0.0f, sine, 1.0f);
 
 		// render triangle
 		glBindVertexArray(VAO);
