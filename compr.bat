@@ -6,5 +6,5 @@ echo compiling %target%.c
 gcc programs/%target%.c src/*.c ^
 -static -Llib -lglfw3 -lgdi32 ^
 -Iinclude ^
--O3 -s -mwindows ^
+-DDEBUG ^
 -o bin/release/comp
