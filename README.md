@@ -17,6 +17,7 @@ For example, compiling `programs/hello/window.c` in debug, you'd do `./compd hel
 Running with no parameters, it'll default to compiling hello/triangle.
 
 
+
 `compd.bat` includes `stdio.h` and print statements, no optimizations.
 
 `compr.bat` does not include `stdio.h`, and optimizes with `-O3 and -s`.
