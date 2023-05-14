@@ -14,7 +14,7 @@ Use any for the comp.bat files to compile the program you want.
 
 For example, compiling `programs/hello/window.c` in debug, you'd do `./compd hello/window`.
 
-Running with no parameters, it'll default to compiling hello/triangle
+Running with no parameters, it'll default to compiling hello/triangle.
 
 
 `compd.bat` includes `stdio.h` and print statements, no optimizations.
