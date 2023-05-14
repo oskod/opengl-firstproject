@@ -18,17 +18,17 @@ const char* vertexShaderSource =
 	"#version 330 core\n"
 	"layout (location = 0) in vec3 pos;\n"
 	"layout (location = 1) in vec3 color;\n"
-	"out vec3 ourColor;\n"
+	"out vec3 vertColor;\n"
 	"void main() {\n"
 	"	gl_Position = vec4(pos, 1.0f);\n"
-	"	ourColor = color;\n"
+	"	vertColor = color;\n"
 	"}";
 const char* fragmentShaderSource = 
 	"#version 330 core\n"
-	"in vec3 ourColor;\n"
+	"in vec3 vertColor;\n"
 	"out vec4 fragColor;\n"
 	"void main() {\n"
-	"	fragColor = vec4(ourColor, 1.0f);\n"
+	"	fragColor = vec4(vertColor, 1.0f);\n"
 	"}";
 
 int main() {
