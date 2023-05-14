@@ -124,7 +124,7 @@ int main() {
 
 	// ahh triangle
 	float vertices[] = {
-		// pos                 // color
+		// pos                 // color 
 		 0.0f,   0.25f, 0.0f,  1.0f, 0.0f, 0.0f, // top
 		-0.25f, -0.25f, 0.0f,  0.0f, 1.0f, 0.0f, // bottom left
 		 0.25f, -0.25f, 0.0f,  0.0f, 0.0f, 1.0f // bottom right
