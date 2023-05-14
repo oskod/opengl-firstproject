@@ -10,7 +10,7 @@ Put all the libraries into the `lib/` folder, if it's not there, run init.bat.
 ## Building
 `init.bat` initializes everything, make sure to run this before anything else.
 
-Use any for the comp.bat files to compile the program you want.
+Use any of the comp.bat files to compile the program you want.
 
 For example, compiling `programs/hello/window.c` in debug, you'd do `./compd hello/window`.
 
