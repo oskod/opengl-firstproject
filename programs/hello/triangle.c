@@ -16,15 +16,19 @@ void processInput(GLFWwindow* window);
 
 const char* vertexShaderSource = 
 	"#version 330 core\n"
-	"layout (location = 0) in vec2 pos;\n"
+	"layout (location = 0) in vec3 pos;\n"
+	"layout (location = 1) in vec3 color;\n"
+	"out vec3 ourColor;\n"
 	"void main() {\n"
-	"	gl_Position = vec4(pos.x, pos.y, 0.0f, 1.0f);\n"
+	"	gl_Position = vec4(pos, 1.0f);\n"
+	"	ourColor = color;\n"
 	"}";
 const char* fragmentShaderSource = 
 	"#version 330 core\n"
+	"in vec3 ourColor;\n"
 	"out vec4 fragColor;\n"
 	"void main() {\n"
-	"	fragColor = vec4(0.5f, 0.2f, 1.0f, 1.0f);\n"
+	"	fragColor = vec4(ourColor, 1.0f);\n"
 	"}";
 
 int main() {
@@ -114,9 +118,10 @@ int main() {
 
 	// ahh triangle
 	float vertices[] = {
-		0.0f, 0.5f, 0.0f, // top
-		-0.5f, -0.5f, 0.0f, // bottom left
-		0.5f, -0.5f, 0.0f // bottom right
+		// pos               // color
+		 0.0f,  0.5f, 0.0f,  1.0f, 0.0f, 0.0f, // top
+		-0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f, // bottom left
+		 0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f // bottom right
 	};
 
 	unsigned int VAO, VBO;
@@ -130,8 +135,12 @@ int main() {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 		// tell opengl how to use the data from the buffer, this gets registered in the vertex array
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+		// position
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 		glEnableVertexAttribArray(0);
+		// color
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+		glEnableVertexAttribArray(1);
 
 		// vertexattribpointer registers VBO as the VAO's vertex buffer, so we can safely unbind this now
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -142,7 +151,7 @@ int main() {
 	while (!glfwWindowShouldClose(window)) {
 		processInput(window);
 
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.0f, 0.0f, 0.2f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glUseProgram(shaderProgram);
