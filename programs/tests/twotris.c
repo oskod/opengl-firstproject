@@ -16,15 +16,15 @@ void processInput(GLFWwindow* window);
 
 const char* lvertexShaderSource = 
 	"#version 330 core\n"
-	"layout (location = 0) in vec2 pos;\n"
+	"layout (location = 0) in vec3 pos;\n"
 	"void main() {\n"
-	"	gl_Position = vec4(pos.x - 0.25f, pos.y, 0.0f, 1.0f);\n"
+	"	gl_Position = vec4(pos.x - 0.25f, pos.y, pos.z, 1.0f);\n"
 	"}";
 const char* rvertexShaderSource = 
 	"#version 330 core\n"
-	"layout (location = 0) in vec2 pos;\n"
+	"layout (location = 0) in vec3 pos;\n"
 	"void main() {\n"
-	"	gl_Position = vec4(pos.x + 0.25f, pos.y, 0.0f, 1.0f);\n"
+	"	gl_Position = vec4(pos.x + 0.25f, pos.y, pos.z, 1.0f);\n"
 	"}";
 const char* fragmentShaderSource = 
 	"#version 330 core\n"

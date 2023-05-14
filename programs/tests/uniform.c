@@ -18,10 +18,10 @@ void processInput(GLFWwindow* window);
 
 const char* vertexShaderSource = 
 	"#version 330 core\n"
-	"layout (location = 0) in vec2 pos;\n"
+	"layout (location = 0) in vec3 pos;\n"
 	"uniform vec4 offset;\n"
 	"void main() {\n"
-	"	gl_Position = offset + vec4(pos.x, pos.y, 0.0f, 1.0f);\n"
+	"	gl_Position = offset + vec4(pos.x, 1.0f);\n"
 	"}";
 const char* fragmentShaderSource = 
 	"#version 330 core\n"
