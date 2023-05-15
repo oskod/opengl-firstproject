@@ -5,7 +5,7 @@
 #define printf(...) (void)0
 #endif
 
-#include "shader.h"
+#include "MAIN/shader.h"
 
 #include "GLAD/glad.h"
 #include "GLFW/glfw3.h"
