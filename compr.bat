@@ -7,4 +7,4 @@ gcc programs/%target%.c src/* ^
 -static -Llib -lglfw3 -lgdi32 ^
 -Iinclude ^
 -O3 -s -mwindows ^
--o bin/release/comp
+-o binaries/release/comp

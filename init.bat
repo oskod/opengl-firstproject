@@ -1,4 +1,4 @@
 mkdir lib
-mkdir bin
-mkdir bin\debug
-mkdir bin\release
+mkdir binaries
+mkdir binaries\debug
+mkdir binaries\release

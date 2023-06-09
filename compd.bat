@@ -7,4 +7,4 @@ gcc programs/%target%.c src/* ^
 -static -Llib -lglfw3 -lgdi32 ^
 -Iinclude ^
 -DDEBUG ^
--o bin/debug/comp
+-o binaries/debug/comp
